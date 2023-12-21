@@ -23,7 +23,7 @@ const TaskManagement = () => {
     
       const fetchTasks = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/tasks?email=${user?.email}`); // Replace with your actual API endpoint
+          const response = await axios.get(`https://task-management-server-sable.vercel.app/tasks?email=${user?.email}`); // Replace with your actual API endpoint
           setTasks(response.data);
         } catch (error) {
           console.error('Error fetching tasks:', error);
@@ -40,7 +40,7 @@ const TaskManagement = () => {
         // Update task status when dragging to a different status
         if (sourceStatus !== destinationStatus) {
           try {
-            await axios.put(`http://localhost:5000/tasks/${taskId}`, {
+            await axios.put(`https://task-management-server-sable.vercel.app/tasks/${taskId}`, {
               status: destinationStatus,
             });
             if(destinationStatus =='ongoing') {
@@ -65,7 +65,7 @@ const TaskManagement = () => {
 
       const onAddTask = async (data) => {
         try {
-          const response = await axios.post('http://localhost:5000/tasks', data); // Replace with your actual API endpoint
+          const response = await axios.post('https://task-management-server-sable.vercel.app/tasks', data); // Replace with your actual API endpoint
 
           setTasks([...tasks, response.data]);
         } catch (error) {
@@ -76,7 +76,7 @@ const TaskManagement = () => {
 
       const handleEditTask = async (data) => {
         try {
-          await axios.patch(`http://localhost:5000/tasks/${data.id}`, {
+          await axios.patch(`https://task-management-server-sable.vercel.app/tasks/${data.id}`, {
             title: data.title,
             description: data.description,
             priority: data.priority,
@@ -92,7 +92,7 @@ const TaskManagement = () => {
 
       const onDeleteTask = async (taskId) => {
         try {
-          const deletingTask = await axios.delete(`http://localhost:5000/tasks/${taskId}`);
+          const deletingTask = await axios.delete(`https://task-management-server-sable.vercel.app/tasks/${taskId}`);
           if(deletingTask.data.acknowledged){
             toast.success("Task Delete Success!")
           }
