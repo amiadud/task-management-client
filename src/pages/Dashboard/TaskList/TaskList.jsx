@@ -12,7 +12,7 @@ const TaskList = ({ title, tasks, status, onDeleteTask }) => {
     }
 
   return (
-    <div className="w-1/3 p-4">
+    <div className="w-full p-4">
       <h2 className="text-lg font-semibold mb-4">{title}</h2>
       <Droppable droppableId={status} key={status}>
         {(provided, snapshot) => (
