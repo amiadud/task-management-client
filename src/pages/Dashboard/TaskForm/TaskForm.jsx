@@ -1,10 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
+import axios from 'axios';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-const TaskForm = ({ onAddTask }) => {
+const TaskForm = () => {
 
   const {user} = useAuth();
+  const [tasks, setTasks] = useState(['']);
+  const axiosOpen = useAxiosPublic();
+  const navigate = useNavigate();
+
+  const onAddTask = async (data) => {
+    try {
+      const response = await axiosOpen.post('/tasks', data); // Replace with your actual API endpoint
+      setTasks([...tasks, response.data]);
+      if(response.status == 200 ){
+        Swal.fire({
+          title: "Task Added!",
+          text: "You clicked the button!",
+          icon: "success"
+        });
+        navigate('/dashboard/')
+      }
+    } catch (error) {
+      console.error('Error adding task:', error);
+    }
+    
+  };
 
   const { handleSubmit, control } = useForm({
     defaultValues: {
@@ -26,7 +52,7 @@ const TaskForm = ({ onAddTask }) => {
   return (
 
     <>
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto p-4 bg-white shadow-md rounded-md">
+    <form onSubmit={handleSubmit(onSubmit)} className=" mx-auto p-4 bg-white shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-4">Create New Task</h2>
 
       <div className="mb-4">

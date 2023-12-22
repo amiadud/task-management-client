@@ -1,15 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { TEInput, TERipple } from 'tw-elements-react';
 import SocialLogin from './SocialLogin';
+import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const Login = () => {
+
+  const {loginUser} = useAuth();
+  const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
         const email = e.target.email.value
         const password = e.target.password.value
         console.log(email, password);
+        loginUser(email, password)
+        .then(res => {
+          console.log(res.user)
+          Swal.fire({
+            title: "User Login SuccessFull",
+            showConfirmButton: false,
+            icon: "success",
+            timer: 1500
+          });
+          navigate("/")
+        })
+        .catch(err => {
+          console.log(err.message);
+        })
     
       }
 

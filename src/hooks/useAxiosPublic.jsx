@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosOpen = axios.create({
-    baseURL: '',
+    baseURL: 'https://task-management-server-sable.vercel.app',
 })
 const useAxiosPublic = () => {
     return axiosOpen

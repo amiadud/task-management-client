@@ -7,8 +7,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
 
 const TaskManagement = () => {
+
+  const axiosOpen = useAxiosPublic();
 
     const { user } = useAuth();
     
@@ -23,7 +26,7 @@ const TaskManagement = () => {
     
       const fetchTasks = async () => {
         try {
-          const response = await axios.get(`https://task-management-server-sable.vercel.app/tasks?email=${user?.email}`); // Replace with your actual API endpoint
+          const response = await axiosOpen.get(`/tasks?email=${user?.email}`);
           setTasks(response.data);
         } catch (error) {
           console.error('Error fetching tasks:', error);
@@ -40,7 +43,7 @@ const TaskManagement = () => {
         // Update task status when dragging to a different status
         if (sourceStatus !== destinationStatus) {
           try {
-            await axios.put(`https://task-management-server-sable.vercel.app/tasks/${taskId}`, {
+            await axiosOpen.put(`/tasks/${taskId}`, {
               status: destinationStatus,
             });
             if(destinationStatus =='ongoing') {
@@ -61,38 +64,9 @@ const TaskManagement = () => {
         }
       };
 
-
-
-      const onAddTask = async (data) => {
-        try {
-          const response = await axios.post('https://task-management-server-sable.vercel.app/tasks', data); // Replace with your actual API endpoint
-
-          setTasks([...tasks, response.data]);
-        } catch (error) {
-          console.error('Error adding task:', error);
-        }
-        
-      };
-
-      const handleEditTask = async (data) => {
-        try {
-          await axios.patch(`https://task-management-server-sable.vercel.app/tasks/${data.id}`, {
-            title: data.title,
-            description: data.description,
-            priority: data.priority,
-            deadline: data.deadline,
-          });
-    
-          fetchTasks();
-          setEditTask(null); // Reset the edit task
-        } catch (error) {
-          console.error('Error editing task:', error);
-        }
-      };
-
       const onDeleteTask = async (taskId) => {
         try {
-          const deletingTask = await axios.delete(`https://task-management-server-sable.vercel.app/tasks/${taskId}`);
+          const deletingTask = await axiosOpen.delete(`/tasks/${taskId}`);
           if(deletingTask.data.acknowledged){
             toast.success("Task Delete Success!")
           }
@@ -104,6 +78,7 @@ const TaskManagement = () => {
 
     return (
         <>
+        <h2 className='text-4xl my-3'>To Do List</h2>
         <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="all-columns" direction="horizontal" type="column">
         {(provided) => (
@@ -125,7 +100,6 @@ const TaskManagement = () => {
           </div>
         )}
       </Droppable>
-      <TaskForm onAddTask={onAddTask} />
       <ToastContainer />
     </DragDropContext>
     </>

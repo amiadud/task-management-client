@@ -5,9 +5,13 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import Home from '../pages/Home/Home';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
-import TaskManagement from '../pages/Dashboard/TaskManagement/TaskManagement';
 import Contact from '../components/Contact/Contact';
 import About from '../components/About/About';
+import Dashboard from '../layout/Dashboard';
+import TaskForm from '../pages/Dashboard/TaskForm/TaskForm';
+import TaskManagement from '../pages/Dashboard/TaskManagement/TaskManagement';
+import Mytask from '../pages/Dashboard/MyTask/Mytask';
+import PrivateRoutes from './PrivateRoutes';
 
 const Routes = createBrowserRouter ([
     {
@@ -27,10 +31,6 @@ const Routes = createBrowserRouter ([
                 element: <Contact/>
             },
             {
-                path: '/dashboard',
-                element: <TaskManagement/>
-            },
-            {
                 path: '/login',
                 element: <Login/>
             },
@@ -40,6 +40,25 @@ const Routes = createBrowserRouter ([
             }
         ]
 
+    },
+    {
+        path: "/dashboard/",
+        element:<PrivateRoutes><Dashboard/></PrivateRoutes>,
+        errorElement:<ErrorPage/>,
+        children: [
+            {
+                path:'/dashboard/',
+                element:<PrivateRoutes><TaskManagement/></PrivateRoutes>
+            },
+            {
+                path: "add-task/",
+                element:<PrivateRoutes><TaskForm/></PrivateRoutes>
+            },
+            {
+                path: "/dashboard/my-added-task/",
+                element:<PrivateRoutes><Mytask/></PrivateRoutes>
+            },
+        ]
     }
 ])
 
