@@ -1,7 +1,9 @@
-import useAuth from '../hooks/useAuth';
+
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useLocation } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import useAuth from '../hooks/useAuth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PrivateRoutes = ({children}) => {
 
@@ -9,22 +11,28 @@ const PrivateRoutes = ({children}) => {
 
     const location = useLocation()
 
-    if (user) {
-        return children
+    if(loading){
+        return (
+            <div
+            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status">
+            <span
+              className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+            >Loading...</span>
+          </div>
+          );
     }
-    
-    else if(loading){
-        return `<span className="loading loading-spinner loading-lg"></span>`
+
+    else if (user) {
+        return children;
     }
 
 
 
     return ( 
-        Swal.fire({
-            icon: "warning",
-            title: "Please Login First!!",
-          }),
-    <Navigate state={location.pathname} to="/login"></Navigate>
+        toast.warning('Please login first!!'),
+        <ToastContainer></ToastContainer>,
+    <Navigate to="/login"></Navigate>
     
     );
 };

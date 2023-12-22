@@ -3,6 +3,7 @@ import logos from '/img/task-logo.png';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import  './Navbar.css'
 import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
 const Navbar = () => {
 
   const {user, logoutUser} = useAuth();
@@ -19,6 +20,12 @@ const handleLogout = ()=> {
   logoutUser()
   .then( () => {
     setTimeout(() => {
+      Swal.fire({
+        title: "User Logout SuccessFull",
+        showConfirmButton: false,
+        icon: "success",
+        timer: 1500
+      });
     }, 200);
     navigate('/') 
   })

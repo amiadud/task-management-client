@@ -4,12 +4,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-const TaskList = ({ title, tasks, status, onDeleteTask }) => {
+const TaskList = ({ title, tasks, status, onDeleteTask, onEditTask }) => {
 
     const handleDelete = (task) => {
         onDeleteTask(task._id)
     }
+
+    const handleEdit = (task) => {
+      onEditTask(task._id)
+  }
 
   return (
     <div className="w-full p-4">
@@ -38,7 +43,8 @@ const TaskList = ({ title, tasks, status, onDeleteTask }) => {
                    <p className="text-sm">{task.description}</p>
                    <p className="text-xs mt-2">Priority: {task.priority}</p>
                    <p className="text-xs">Deadline: {task.deadline}</p>
-                   <button className='btn btn-sm btn-accent text-white' onClick={()=> handleDelete(task)}>Delete</button>
+                   <button className='btn btn-sm mr-2 btn-accent text-white' onClick={()=> handleDelete(task)}>Delete</button>
+                   <Link to={`/dashboard/update-task/${task._id}`} className='btn btn-sm  btn-primary text-white'>Edit</Link>
                  </div>
                )}
              </Draggable>

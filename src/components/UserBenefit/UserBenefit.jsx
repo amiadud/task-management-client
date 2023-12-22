@@ -29,14 +29,38 @@ const UserBenefit = () => {
             ' Streamlined communication within the team.',
           ],
         },
+      {
+          title: 'Photographers',
+          benefits: [
+          'Creativity needs structure.',
+          ' Photographers and creative teams can benefit from our Task Management features to organize shoots,',
+          ' track editing progress, and manage client deliverables efficiently, ensuring a seamless creative workflow.',
+        ],
+      },
+      {
+        title: 'Freelancers',
+        benefits: [
+        'Freelancers often manage multiple projects simultaneously. ',
+        ' Our Task Management platform helps freelancers organize assignments,',
+        ' set priorities, and meet client deadlines, contributing to a successful and thriving freelance career.',
+      ],
+    },
+    {
+      title: 'Entrepreneurs',
+      benefits: [
+      'Entrepreneurs and startup founders juggling various aspects of their business can utilize our Task Management tools to prioritize tasks',
+      ' delegate responsibilities, ',
+      '  and maintain a clear overview of ongoing activities, fostering growth and success.',
+    ],
+  },
         // Add more user types and benefits as needed
       ];
 
     return (
         <>
-        <SectionTitle  heading={'Who Can Benefit?'}/>
+        <SectionTitle  heading={' Who Can Benefit??'}/>
         
-        <div className='grid grid-cols-2 gap-4 my-3 '>
+        <div className='grid grid-cols-2 gap-2  my-3 '>
       {userTypes.map((user, index) => (
         <div
         className="block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">

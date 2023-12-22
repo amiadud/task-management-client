@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
 
 const TaskManagement = () => {
 
@@ -66,15 +67,43 @@ const TaskManagement = () => {
 
       const onDeleteTask = async (taskId) => {
         try {
-          const deletingTask = await axiosOpen.delete(`/tasks/${taskId}`);
-          if(deletingTask.data.acknowledged){
-            toast.success("Task Delete Success!")
-          }
-          fetchTasks();
+          Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then( async(result) => {
+            if (result.isConfirmed) {
+              await axiosOpen.delete(`/tasks/${taskId}`);
+              const remaining = tasks.filter(product => product._id !== taskId)
+              setTasks(remaining);  
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
+            }
+          });
+          
         } catch (error) {
           console.error('Error deleting task:', error);
         }
       };
+
+      const onEditTask = async (taskId) => {
+        try {
+          const editingTask = await axiosOpen.patch(`/tasks/${taskId}`);
+          if(editingTask.data.acknowledged){
+            toast.success("Task Edit Success!")
+          }
+          fetchTasks();
+        } catch (error) {
+          console.error('Error editing task:', error);
+        }
+      }
 
     return (
         <>

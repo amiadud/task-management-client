@@ -2,8 +2,8 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { TEInput, TERipple } from 'tw-elements-react';
 import SocialLogin from './SocialLogin';
-import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import useAuth from '../../hooks/useAuth';
 
 const Login = () => {
 

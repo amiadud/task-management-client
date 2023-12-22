@@ -1,10 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TEInput, TERipple } from 'tw-elements-react';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
+import { ToastContainer, toast } from 'react-toastify';
 
 const image_hosting_key = '0dc2a07f0d8d82d6024cfcd663e086fa'
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
@@ -51,29 +52,18 @@ const Register = () => {
       const user_image = res.data.data.display_url
       const name = data.name
 
-      console.log(email, name, user_image);
+      console.log(email, name,password, user_image);
 
-      userSingup(email,password)
+      createUser(email, password)
       .then(res => {
-        updateUserProfile( name, user_image )
+        updateUserProfile(name, user_image)
         .then( res => {
-          const userInfo = {
-            name: name,
-            email: email,
-            photo: user_image
-          }
-          axiosOpen.post('/users',userInfo)
-            .then(res => {
-              if(res.data.insertedId){
-              // FormData.reset();
-              Swal.fire({
-              title: "Register Success",
-              showConfirmButton: false,
-              timer: 1500
-            });
-                navigate('/');
-              }
-            })
+          Swal.fire({
+            title: "Register Success",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          navigate('/');
         })
       })
 
@@ -175,6 +165,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+      <ToastContainer/>
         </div>
     );
 };

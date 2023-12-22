@@ -3,6 +3,8 @@ import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import useAuth from '../../../hooks/useAuth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const Mytask = () => {
 
@@ -30,12 +32,26 @@ const Mytask = () => {
 
       const onDeleteTask = async (taskId) => {
         try {
-          const deletingTask = await axiosOpen.delete(`/tasks/${taskId}`);
-          if(deletingTask.data.acknowledged){
-            toast.success('Task deleted successfully')
+          Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then( async(result) => {
+            if (result.isConfirmed) {
+              await axiosOpen.delete(`/tasks/${taskId}`);
               const remaining = tasks.filter(product => product._id !== taskId)
               setTasks(remaining);  
-          }
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
+            }
+          });
           
         } catch (error) {
           console.error('Error deleting task:', error);
@@ -53,9 +69,9 @@ const Mytask = () => {
             <hr />
   <table className="table">
     {/* head */}
-    <thead>
+    <thead className=' table-header-group'>
       <tr>
-        <th>ID</th>
+        <th className='table-'>ID</th>
         <th>Title</th>
         <th>Description</th>
         <th>Deadline</th>
@@ -65,41 +81,22 @@ const Mytask = () => {
       </tr>
     </thead>
     <tbody>
-      {/* row 1 */}
-      <tr className="">
-        {
-            tasks.length > 0 ? tasks.map((task, index) => {
-                return (
-                    <>
-                    <td key={index}>
-                    {index + 1}
-                    </td>
-                    <td>
-                    {task?.title}
-                    </td>
-                    <td >
-                    {task?.description}
-                    </td>
-                    <td >
-                    {task?.deadline}
-                    </td>
-                    <td >
-                    {task?.priority}
-                    </td>
-                    <td >
-                    {task?.status}
-                    </td>
-                    <td className='relative'>
-                    <button className='btn btn-sm btn-accent text-white' onClick={()=> handleDelete(task)}>Delete</button>
-                   
-                    </td>
-                    </>
-                )
-            }
-            
-            ) : <><h2 className="text-xl  text-black my-2">Not Available Task</h2></>
-        }
-      </tr>
+      {
+        tasks.length > 0 ? tasks.map((task, index) => (
+          <tr key={task._id}>
+            <td>{index + 1}</td>
+            <td>{task.title}</td>
+            <td>{task.description}</td>
+            <td>{task.deadline}</td>
+            <td>{task.priority}</td>
+            <td>{task.status}</td>
+            <td className='flex gap-4'>
+              <button className="btn btn-danger btn-secondary btn-sm" onClick={() => handleDelete(task)}>Delete</button>
+              <Link to={`/dashboard/update-task/${task._id}`} className="btn btn-accent btn-sm">Update</Link>
+            </td>
+          </tr>
+        )) : <><h2>Task Not Available</h2></>
+      }
     </tbody>
   </table>
   <ToastContainer />

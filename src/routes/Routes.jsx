@@ -12,6 +12,7 @@ import TaskForm from '../pages/Dashboard/TaskForm/TaskForm';
 import TaskManagement from '../pages/Dashboard/TaskManagement/TaskManagement';
 import Mytask from '../pages/Dashboard/MyTask/Mytask';
 import PrivateRoutes from './PrivateRoutes';
+import UpdateTask from '../pages/Dashboard/UpdateTask/UpdateTask';
 
 const Routes = createBrowserRouter ([
     {
@@ -42,8 +43,7 @@ const Routes = createBrowserRouter ([
 
     },
     {
-        path: "/dashboard/",
-        element:<PrivateRoutes><Dashboard/></PrivateRoutes>,
+        element:<Dashboard/>,
         errorElement:<ErrorPage/>,
         children: [
             {
@@ -51,12 +51,17 @@ const Routes = createBrowserRouter ([
                 element:<PrivateRoutes><TaskManagement/></PrivateRoutes>
             },
             {
-                path: "add-task/",
+                path: "/dashboard/add-task/",
                 element:<PrivateRoutes><TaskForm/></PrivateRoutes>
             },
             {
                 path: "/dashboard/my-added-task/",
                 element:<PrivateRoutes><Mytask/></PrivateRoutes>
+            },
+            {
+                path: "/dashboard/update-task/:id",
+                element:<PrivateRoutes><UpdateTask/></PrivateRoutes>,
+                loader:({params})=> fetch(`http://localhost:5000/task-details/${params?.id}`)
             },
         ]
     }
