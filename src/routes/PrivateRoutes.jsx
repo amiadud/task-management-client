@@ -4,6 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 
 const PrivateRoutes = ({children}) => {
 
@@ -30,9 +31,11 @@ const PrivateRoutes = ({children}) => {
 
 
     return ( 
-        toast.warning('Please login first!!'),
-        <ToastContainer></ToastContainer>,
-    <Navigate to="/login"></Navigate>
+        Swal.fire({
+            icon: "warning",
+            title: "Please Login First!!",
+          }),
+    <Navigate to="/login" replace></Navigate>
     
     );
 };

@@ -8,7 +8,9 @@ import useAuth from '../../hooks/useAuth';
 const Login = () => {
 
   const {loginUser} = useAuth();
+  const location = useLocation()
   const navigate = useNavigate();
+
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -24,7 +26,7 @@ const Login = () => {
             icon: "success",
             timer: 1500
           });
-          navigate("/")
+          navigate("/dashboard")
         })
         .catch(err => {
           console.log(err.message);

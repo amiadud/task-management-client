@@ -12,6 +12,7 @@ const Navbar = () => {
     const navlinks = <>
         <li><NavLink className='mx-1 overflow-auto md:my-0' to={'/'}>Home</NavLink></li>
         <li><NavLink className='mx-1  my-1 md:my-0' to={'/dashboard'}>Dashboard</NavLink></li>
+        <li><NavLink className='mx-1  my-1 md:my-0' to={'/dashboard/my-added-task/'}>My Task</NavLink></li>
         <li><NavLink className='mx-1 ' to={'/about'}>About</NavLink></li>
         <li><NavLink className='mx-1 my-1 md:my-0' to={'/contact'}>Contact</NavLink></li>
     </>

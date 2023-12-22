@@ -24,11 +24,17 @@ const UpdateTask = () => {
     try {
         const response = await axiosOpen.put(`/task-details/${_id}`, data); // Replace with your actual API endpoint
         setTasks([...tasks, response.data]);
+        if(response.data.modifiedCount > 0) {
+            Swal.fire({
+                title: "Update Task!",
+                text: "You clicked the button!",
+                icon: "success"
+              });
+              navigate('/dashboard/my-added-task/')
+        }
       } catch (error) {
         console.error('Error adding task:', error);
       }
-      console.log(data)
-    console.log(data)
   };
 
 

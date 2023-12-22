@@ -61,7 +61,7 @@ const Routes = createBrowserRouter ([
             {
                 path: "/dashboard/update-task/:id",
                 element:<PrivateRoutes><UpdateTask/></PrivateRoutes>,
-                loader:({params})=> fetch(`http://localhost:5000/task-details/${params?.id}`)
+                loader:({params})=> fetch(`https://task-management-server-sable.vercel.app/task-details/${params?.id}`)
             },
         ]
     }

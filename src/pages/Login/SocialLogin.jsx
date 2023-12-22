@@ -3,6 +3,7 @@ import { TERipple } from 'tw-elements-react';
 import { FaGithub } from 'react-icons/fa';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const SocialLogin = () => {
 
@@ -13,7 +14,13 @@ const handleSocialLogin = (media) =>{
   media()
   .then(res => {
       console.log(res.user);
-      navigate("/dashboard");
+      Swal.fire({
+        title: "User Login SuccessFull",
+        showConfirmButton: false,
+        icon: "success",
+        timer: 1500
+      });
+      navigate("/dashboard")
   })
   .catch(err => {
       console.log(err.message);
