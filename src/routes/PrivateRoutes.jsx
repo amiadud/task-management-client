@@ -2,15 +2,12 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2';
 
 const PrivateRoutes = ({children}) => {
 
     const {user, loading} = useAuth();
-
-    const location = useLocation()
 
     if(loading){
         return (

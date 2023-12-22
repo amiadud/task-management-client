@@ -2,9 +2,6 @@ import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword,
 import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import auth from '../firebase/firebase.config';
-import axios from 'axios';
-import useAxiosPublic from '../hooks/useAxiosPublic';
-
 export const AuthContext = createContext(null)
 
 const googleProvider = new GoogleAuthProvider();

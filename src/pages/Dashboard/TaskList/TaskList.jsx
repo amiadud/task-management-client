@@ -1,5 +1,3 @@
-// src/components/TaskList.js
-
 import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { Link } from 'react-router-dom';

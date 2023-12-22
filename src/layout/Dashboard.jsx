@@ -1,20 +1,14 @@
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import 'flowbite';
 import { MdLogout } from "react-icons/md";
 import Swal from 'sweetalert2';
-import { FaUsers } from "react-icons/fa";
-import { FaRectangleList } from "react-icons/fa6";
-import { MdFormatListBulletedAdd, MdLightMode, MdDarkMode } from "react-icons/md";
+import { MdFormatListBulletedAdd } from "react-icons/md";
 import { FaClipboardList, FaDonate } from "react-icons/fa";
-import { FaSwatchbook } from "react-icons/fa6";
 import { Helmet } from 'react-helmet';
 import useAuth from '../hooks/useAuth';
-import { useEffect } from 'react';
 
 
 const Dashboard = () => {
-
-
 
    const navigate = useNavigate();
 
