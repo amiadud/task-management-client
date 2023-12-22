@@ -1,9 +1,7 @@
 // src/components/TaskList.js
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const TaskList = ({ title, tasks, status, onDeleteTask, onEditTask }) => {
@@ -11,10 +9,6 @@ const TaskList = ({ title, tasks, status, onDeleteTask, onEditTask }) => {
     const handleDelete = (task) => {
         onDeleteTask(task._id)
     }
-
-    const handleEdit = (task) => {
-      onEditTask(task._id)
-  }
 
   return (
     <div className="w-full p-4">

@@ -55,15 +55,16 @@ const Register = () => {
       console.log(email, name,password, user_image);
 
       createUser(email, password)
-      .then(res => {
+      .then((res) => {
         updateUserProfile(name, user_image)
-        .then( res => {
+        .then( (res) => {
           Swal.fire({
             title: "Register Success",
+            icon: "success",
             showConfirmButton: false,
             timer: 1500
           });
-          navigate('/');
+          navigate('/dashboard');
         })
       })
 

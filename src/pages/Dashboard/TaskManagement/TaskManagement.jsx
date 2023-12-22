@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import TaskForm from '../TaskForm/TaskForm';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import TaskList from '../TaskList/TaskList';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
@@ -92,18 +89,6 @@ const TaskManagement = () => {
           console.error('Error deleting task:', error);
         }
       };
-
-      const onEditTask = async (taskId) => {
-        try {
-          const editingTask = await axiosOpen.patch(`/tasks/${taskId}`);
-          if(editingTask.data.acknowledged){
-            toast.success("Task Edit Success!")
-          }
-          fetchTasks();
-        } catch (error) {
-          console.error('Error editing task:', error);
-        }
-      }
 
     return (
         <>
